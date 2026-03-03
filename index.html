@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Study Tracker</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin-top: 50px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+    .box {
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📚 My Study Tracker</h1>
+
+  <input type="number" id="hours" placeholder="Enter study hours">
+  <button onclick="addHours()">Add</button>
+
+  <div class="box">
+    Total Study Hours: <span id="total">0</span>
+  </div>
+
+<script>
+  let total = localStorage.getItem("totalHours") || 0;
+  document.getElementById("total").innerText = total;
+
+  function addHours() {
+    let hours = document.getElementById("hours").value;
+    total = Number(total) + Number(hours);
+    localStorage.setItem("totalHours", total);
+    document.getElementById("total").innerText = total;
+  }
+</script>
+
+</body>
+</html>
