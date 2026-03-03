@@ -16,28 +16,66 @@
       font-size: 20px;
       margin-top: 20px;
     }
+    .progress {
+      margin-top: 15px;
+      font-weight: bold;
+      color: green;
+    }
   </style>
 </head>
 <body>
 
   <h1>📚 My Study Tracker</h1>
 
+  <h3>🎯 Set Daily Goal</h3>
+  <input type="number" id="goalInput" placeholder="Enter daily goal hours">
+  <button onclick="setGoal()">Set Goal</button>
+
+  <h3>➕ Add Study Time</h3>
   <input type="number" id="hours" placeholder="Enter study hours">
   <button onclick="addHours()">Add</button>
 
   <div class="box">
-    Total Study Hours: <span id="total">0</span>
+    Total Study Hours Today: <span id="total">0</span>
+  </div>
+
+  <div class="box">
+    Daily Goal: <span id="goal">0</span>
+  </div>
+
+  <div class="progress">
+    Progress: <span id="progress">0%</span>
   </div>
 
 <script>
   let total = localStorage.getItem("totalHours") || 0;
+  let goal = localStorage.getItem("dailyGoal") || 0;
+
   document.getElementById("total").innerText = total;
+  document.getElementById("goal").innerText = goal;
+
+  updateProgress();
+
+  function setGoal() {
+    goal = document.getElementById("goalInput").value;
+    localStorage.setItem("dailyGoal", goal);
+    document.getElementById("goal").innerText = goal;
+    updateProgress();
+  }
 
   function addHours() {
     let hours = document.getElementById("hours").value;
     total = Number(total) + Number(hours);
     localStorage.setItem("totalHours", total);
     document.getElementById("total").innerText = total;
+    updateProgress();
+  }
+
+  function updateProgress() {
+    if (goal > 0) {
+      let percent = Math.min((total / goal) * 100, 100);
+      document.getElementById("progress").innerText = percent.toFixed(1) + "%";
+    }
   }
 </script>
 
